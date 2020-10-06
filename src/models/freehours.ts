@@ -15,6 +15,12 @@ const insertHour = async (freehours: FreeHours) => {
     return retorno[0].Id as number | undefined;
 }
 
+const updateHour = async (freehours: FreeHours) => {
+    await dbQuery(`UPDATE freehours SET id_company = ?, from_hour = ?, to_hour = ?, week_day = ? WHERE id_hours = ?`,
+    [freehours.id_company, freehours.from_hour, freehours.to_hour, freehours.week_day, freehours.id_hours]);
+    return getHour(freehours.id_hours);
+}
+
 const listHours = async () => {
     const retorno = await dbQuery(`SELECT * FROM 'freehours'`);
     return retorno as FreeHours[];
@@ -30,13 +36,16 @@ const getHourCompany = async (id_company: number) => {
     return retorno as FreeHours[];
 }
 
-//atualizar horario 
+const deleteFreeHours = async (id_hours:number) => {
+    await dbQueryFirst (`DELETE FROM freehours WHERE id_hours = ?`, [id_hours])
+}
 
-//deletar horario
 
 export const freeHoursModel = {
     insertHour,
+    updateHour,
     listHours,
     getHour,
-    getHourCompany
+    getHourCompany,
+    deleteFreeHours
 }
