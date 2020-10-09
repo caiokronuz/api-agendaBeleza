@@ -5,21 +5,23 @@ export type ReservedHours = {
     id_company: number,
     name_company: string,
     id_client: number,
+    name_client: string,
+    telefone_client: string,
     from_hour: string,
     to_hour: string,
     week_day: number,
 }
 
 const insertReservedHour = async(reservedhours: ReservedHours) => {
-    await dbQuery(`INSERT INTO reservedhours (id_company, name_company, id_client, from_hour, to_hour, week_day) VALUES (?, ?, ?, ?, ?, ?)`,
-    [reservedhours.id_company, reservedhours.name_company, reservedhours.id_client, reservedhours.from_hour, reservedhours.to_hour, reservedhours.week_day])
+    await dbQuery(`INSERT INTO reservedhours (id_company, name_company, id_client, name_client, telefone_client, from_hour, to_hour, week_day) VALUES (? ,?, ?, ?, ?, ?, ?, ?)`,
+    [reservedhours.id_company, reservedhours.name_company, reservedhours.id_client, reservedhours.name_client, reservedhours.telefone_client, reservedhours.from_hour, reservedhours.to_hour, reservedhours.week_day])
     let retorno = await dbQuery(`SELECT seq AS Id FROM sqlite_sequence WHERE name = 'reservedhours'`);
     return retorno[0].Id as number | undefined;
 }
 
 const updateReservedHour = async (reservedhours: ReservedHours) => {
-    await dbQuery(`UPDATE reservedhours SET id_company = ?, SET name_company =?, id_client = ?, from_hour = ?, to_hour = ?, week_day = ? WHERE id_rhours = ?`,
-    [reservedhours.id_company, reservedhours.name_company, reservedhours.id_client, reservedhours.from_hour, reservedhours.to_hour, reservedhours.week_day, reservedhours.id_rhours]);
+    await dbQuery(`UPDATE reservedhours SET id_company = ?, SET name_company =?, id_client = ?, name_client = ?, telefone_client = ?, from_hour = ?, to_hour = ?, week_day = ? WHERE id_rhours = ?`,
+    [reservedhours.id_company, reservedhours.name_company, reservedhours.id_client, reservedhours.name_client, reservedhours.telefone_client, reservedhours.from_hour, reservedhours.to_hour, reservedhours.week_day, reservedhours.id_rhours]);
     return getReservedHour(reservedhours.id_rhours)
 }
 

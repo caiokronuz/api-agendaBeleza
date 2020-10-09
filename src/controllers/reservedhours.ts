@@ -18,6 +18,12 @@ const insertReservedHour = (req: Request, res: Response) => {
         if(!reservedhour.id_client)
             return badRequest(res, "Cliente inválido!")
 
+        if(!reservedhour.name_client)
+            return badRequest(res, 'Cliente inválido!')
+
+        if(!reservedhour.telefone_client)
+            return badRequest(res, 'Telefone cliente inválido!')
+
         if(!reservedhour.from_hour)
             return badRequest(res, "Horário inicial inválido!")
 
@@ -54,6 +60,12 @@ const updateReservedHour = async (req: Request, res: Response) => {
 
         if(!reservedhour.id_client)
             return badRequest(res, 'Usuário inválido')
+
+        if(!reservedhour.name_client)
+            return badRequest(res, 'Cliente inválido!')
+
+        if(!reservedhour.telefone_client)
+            return badRequest(res, 'Telefone cliente inválido!')
 
         if(!reservedhour.from_hour)
             return badRequest(res, 'Horário inicial inválido')
